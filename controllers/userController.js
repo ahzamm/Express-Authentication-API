@@ -33,6 +33,10 @@ class UserController {
                             tc: tc,
                         });
                         await doc.save();
+                        res.send({
+                            status: "success",
+                            message: "Registeration success",
+                        });
                     } catch {
                         res.send({
                             status: "failed",
