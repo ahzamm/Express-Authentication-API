@@ -10,3 +10,13 @@ content-type: application/json
   "password_confirmation":"1234",
   "tc":true
 }
+
+### User Login
+
+POST http://localhost:8000/api/user/login
+content-type: application/json
+
+{  
+  "email":"test4 @test.com",
+  "password":"1234"
+}

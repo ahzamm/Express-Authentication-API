@@ -33,7 +33,7 @@ class UserController {
                             tc: tc,
                         });
                         await doc.save();
-                        res.send({
+                        res.status(201).send({
                             status: "success",
                             message: "Registeration success",
                         });
@@ -57,6 +57,43 @@ class UserController {
                     message: "All fields are required",
                 });
             }
+        }
+    };
+    static userLogin = async (req, res) => {
+        try {
+            const { email, password } = req.body;
+            if (email && password) {
+                const user = await UserModel.findOne({ email: email });
+                if (user) {
+                    const isPasswordCorrect = await bcrypt.compare(
+                        password,
+                        user.password
+                    );
+                    if (isPasswordCorrect) {
+                        res.send({
+                            status: "success",
+                            message: "Logedin Successfully",
+                        });
+                    } else {
+                        res.send({
+                            status: "failed",
+                            message: "Email or Password not match",
+                        });
+                    }
+                } else {
+                    res.send({
+                        status: "failed",
+                        message: "Email or Password not match",
+                    });
+                }
+            } else {
+                res.send({
+                    status: "failed",
+                    message: "All fields are required",
+                });
+            }
+        } catch {
+            res.send({ status: "failed", message: "Something went wrong" });
         }
     };
 }

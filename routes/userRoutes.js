@@ -6,6 +6,7 @@ const routes = express.Router();
 // Public Routes
 // the routes which can be accessed without authentication (eg. login, signup,..)
 routes.post("/registeration", UserController.userRegistration);
+routes.post("/login", UserController.userLogin);
 // Private Routes
 // the routes which can not be accessed without authentication (eg. dashboard,..)
 
