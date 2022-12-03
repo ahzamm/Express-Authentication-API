@@ -1,0 +1,12 @@
+### User Registeration
+
+POST http://localhost:8000/api/user/registeration
+content-type: application/
+
+{
+  "name":"Ahzam Ahmed",
+  "email":"test@test.com",
+  "password":"1234",
+  "password_confirmation":"1324",
+  "tc":true
+}
