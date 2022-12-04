@@ -22,7 +22,9 @@ class UserController {
                 if (password === password_confirmation) {
                     try {
                         // hashing the password
-                        const salt = await bcrypt.genSalt(12);
+                        const salt = await bcrypt.genSalt(
+                            parseInt(process.env.SALT_VALUE)
+                        );
                         const hashPasssword = await bcrypt.hash(password, salt);
 
                         // storing the user registeration information in to the database
@@ -80,9 +82,16 @@ class UserController {
                         user.password
                     );
                     if (isPasswordCorrect) {
+                        const token = jwt.sign(
+                            { userID: user._id },
+                            process.env.JWT_SECRET_KEY,
+                            { expiresIn: "1d" }
+                        );
+
                         res.send({
                             status: "success",
                             message: "Logedin Successfully",
+                            token: token,
                         });
                     } else {
                         res.send({
@@ -104,6 +113,62 @@ class UserController {
             }
         } catch {
             res.send({ status: "failed", message: "Something went wrong" });
+        }
+    };
+    static userChangePassword = async (req, res) => {
+        const { oldPassword, newPassword, confirmPassword } = req.body;
+        if (oldPassword && newPassword && confirmPassword) {
+            if (newPassword === confirmPassword) {
+                if (req.headers && req.headers.authorization) {
+                    var authorization = req.headers.authorization.split(" ")[1];
+                    const decoded = jwt.verify(
+                        authorization,
+                        process.env.JWT_SECRET_KEY
+                    );
+                    var userId = decoded.userID;
+                    // Fetch the user by id
+                    const user = await UserModel.findOne({ _id: userId });
+                    const isPasswordCorrect = await bcrypt.compare(
+                        oldPassword,
+                        user.password
+                    );
+
+                    if (isPasswordCorrect) {
+                        // hash newPassword
+                        const salt = await bcrypt.genSalt(
+                            parseInt(process.env.SALT_VALUE)
+                        );
+                        const newHashedPasssword = await bcrypt.hash(
+                            newPassword,
+                            salt
+                        );
+
+                        await UserModel.findByIdAndUpdate(req.user._id, {
+                            $set: { password: newHashedPasssword },
+                        });
+
+                        res.send({
+                            status: "success",
+                            message: "Password changed successfully",
+                        });
+                    } else {
+                        res.send({
+                            status: "failed",
+                            message: "Wrong old password",
+                        });
+                    }
+                }
+            } else {
+                res.send({
+                    status: "failed",
+                    message: "New password and confirm password doesn't match",
+                });
+            }
+        } else {
+            res.send({
+                status: "failed",
+                message: "All fields required",
+            });
         }
     };
 }

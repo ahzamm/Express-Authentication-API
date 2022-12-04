@@ -1,5 +1,4 @@
 ### User Registeration
-
 POST http://localhost:8000/api/user/registeration
 content-type: application/json
 
@@ -12,11 +11,21 @@ content-type: application/json
 }
 
 ### User Login
-
 POST http://localhost:8000/api/user/login
 content-type: application/json
 
 {  
   "email":"test4 @test.com",
-  "password":"1234"
+  "password":"12345"
+}
+
+### User Change Password
+POST http://localhost:8000/api/user/changepassword
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiNmYzYTk2ZTQyNmQxMGI1MWM5NjUiLCJpYXQiOjE2NzAyNTg4MDYsImV4cCI6MTY3MDM0NTIwNn0.n_X9EstdyRlkyUnBJmE3BNTMpbIlDGEcFDfTETiSKWc
+
+{  
+  "oldPassword":"1234",
+  "newPassword":"12345",
+  "confirmPassword":"12345"
 }
