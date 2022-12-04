@@ -5,7 +5,7 @@ content-type: application/json
 
 {
   "name":"Ahzam Ahmed",
-  "email":"test4 @test.com",
+  "email":"test5@test.com",
   "password":"1234",
   "password_confirmation":"1234",
   "tc":true

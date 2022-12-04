@@ -33,9 +33,19 @@ class UserController {
                             tc: tc,
                         });
                         await doc.save();
+
+                        // Generate JWT Token
+                        const user = UserModel.findOne({ email: email });
+                        const token = jwt.sign(
+                            { userID: user._id },
+                            process.env.JWT_SECRET_KEY,
+                            { expiresIn: "1d" }
+                        );
+
                         res.status(201).send({
                             status: "success",
                             message: "Registeration success",
+                            token: token,
                         });
                     } catch {
                         res.send({
