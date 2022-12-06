@@ -6,6 +6,7 @@ const routes = express.Router();
 
 // Route level Middleware
 routes.use("/changepassword", checkUserAuth);
+routes.use("/userprofile", checkUserAuth);
 
 // Public Routes
 // the routes which can be accessed without authentication (eg. login, signup,..)
@@ -15,5 +16,6 @@ routes.post("/login", UserController.userLogin);
 // Private Routes
 // the routes which can not be accessed without authentication (eg. dashboard,..)
 routes.post("/changepassword", UserController.userChangePassword);
+routes.get("/userprofile", UserController.userProfile);
 
 export default routes;

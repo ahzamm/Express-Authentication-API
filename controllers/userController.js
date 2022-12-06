@@ -171,6 +171,9 @@ class UserController {
             });
         }
     };
+    static userProfile = async (req, res) => {
+        res.send({ status: "success", user: req.user });
+    };
 }
 
 export default UserController;

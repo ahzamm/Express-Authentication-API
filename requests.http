@@ -29,3 +29,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiN
   "newPassword":"12345",
   "confirmPassword":"12345"
 }
+
+### User Profile
+GET http://localhost:8000/api/user/userprofile
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiNmYzYTk2ZTQyNmQxMGI1MWM5NjUiLCJpYXQiOjE2NzAzNTI5ODgsImV4cCI6MTY3MDQzOTM4OH0.gWtb0rRJZ3wXujRmnc5XGEtYEaIaLUbSqfhH75uy3Wk
