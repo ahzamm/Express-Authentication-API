@@ -23,7 +23,6 @@ var checkUserAuth = async (req, res, next) => {
             // to shift the program execution flow
             next();
         } catch (e) {
-            console.log("=======>" + e);
             res.status(401).send({
                 status: "failed",
                 message: "Unauthorized User",
