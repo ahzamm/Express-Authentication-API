@@ -20,7 +20,7 @@ content-type: application/json
 }
 
 ### User Change Password
-POST http://localhost:8000/api/user/changepassword
+POST http://localhost:8000/api/user/change-password
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiNmYzYTk2ZTQyNmQxMGI1MWM5NjUiLCJpYXQiOjE2NzA1MTYwOTQsImV4cCI6MTkzMjMwODA5NH0.Gffxk70IUY4ui9wSMUR7OrpPPIyQHthdVDvxpOy0vpg
 
@@ -31,6 +31,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiN
 }
 
 ### User Profile
-GET http://localhost:8000/api/user/userprofile
+GET http://localhost:8000/api/user/user-profile
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiNmYzYTk2ZTQyNmQxMGI1MWM5NjUiLCJpYXQiOjE2NzA1MTYwOTQsImV4cCI6MTkzMjMwODA5NH0.Gffxk70IUY4ui9wSMUR7OrpPPIyQHthdVDvxpOy0vpg
+
+
+
+### Password Reset Email
+POST http://localhost:8000/api/user/password-reset-email
+content-type: application/json
+
+{  
+  "email": "test4 @test.com"
+}

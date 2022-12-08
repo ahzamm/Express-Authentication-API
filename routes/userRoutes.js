@@ -5,17 +5,18 @@ import checkUserAuth from "../middleware/auth-middleware.js";
 const routes = express.Router();
 
 // Route level Middleware
-routes.use("/changepassword", checkUserAuth);
-routes.use("/userprofile", checkUserAuth);
+routes.use("/change-password", checkUserAuth);
+routes.use("/user-profile", checkUserAuth);
 
 // Public Routes
 // the routes which can be accessed without authentication (eg. login, signup,..)
 routes.post("/registeration", UserController.userRegistration);
 routes.post("/login", UserController.userLogin);
+routes.post("/password-reset-email", UserController.sendUserPasswordResetEmail);
 
 // Private Routes
 // the routes which can not be accessed without authentication (eg. dashboard,..)
-routes.post("/changepassword", UserController.userChangePassword);
-routes.get("/userprofile", UserController.userProfile);
+routes.post("/change-password", UserController.userChangePassword);
+routes.get("/user-profile", UserController.userProfile);
 
 export default routes;

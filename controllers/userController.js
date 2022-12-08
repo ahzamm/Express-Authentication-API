@@ -174,6 +174,38 @@ class UserController {
     static userProfile = async (req, res) => {
         res.send({ status: "success", user: req.user });
     };
+    static sendUserPasswordResetEmail = async (req, res) => {
+        const { email } = req.body;
+        if (email) {
+            // check if user for given email exists?
+            const user = await UserModel.findOne({ email: email });
+            if (user) {
+                // generate secret by combining user_id and secret_key
+                const secret = user._id + process.env.JWT_SECRET_KEY;
+                // generate special token for password reset using secret which is the
+                // combination of regular secret and user id and not just secret
+                const token = jwt.sign({ userID: user._id }, secret, {
+                    expiresIn: `${process.env.RESET_TOKEN_TIME}m`,
+                });
+                const link = `http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`;
+                console.log(link);
+                res.send({
+                    status: "success",
+                    message: "Password reset email sent to your email",
+                });
+            } else {
+                res.send({
+                    status: "failed",
+                    message: "Not a registered user",
+                });
+            }
+        } else {
+            res.send({
+                status: "failed",
+                message: "All fields are required",
+            });
+        }
+    };
 }
 
 export default UserController;
