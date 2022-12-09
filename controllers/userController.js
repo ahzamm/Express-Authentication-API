@@ -1,6 +1,7 @@
 import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import transporter from "../config/emailConfig.js";
 
 class UserController {
     // static methods are called without class object
@@ -188,10 +189,18 @@ class UserController {
                     expiresIn: `${process.env.RESET_TOKEN_TIME}m`,
                 });
                 const link = `http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`;
-                console.log(link);
+
+                // SEND EMAIL
+                let info = await transporter.sendMail.sendMail({
+                    from: process.env.EMAIL_FROM,
+                    to: user.email,
+                    subject: "Password Reset Link",
+                    body: `<a href=${link}>Click Here</a> to Reset your Passowrd`,
+                });
                 res.send({
                     status: "success",
                     message: "Password reset email sent to your email",
+                    info: info,
                 });
             } else {
                 res.send({
