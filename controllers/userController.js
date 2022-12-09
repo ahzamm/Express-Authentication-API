@@ -206,6 +206,51 @@ class UserController {
             });
         }
     };
+    static userPasswordReset = async (req, res) => {
+        const { password, password_confirmation } = req.body;
+        const { id, token } = req.params;
+        const user = await UserModel.findById(id);
+        const new_secret = user._id + process.env.JWT_SECRET_KEY;
+        try {
+            jwt.verify(token, new_secret);
+            if (password && password_confirmation) {
+                if (password == password_confirmation) {
+                    const salt = await bcrypt.genSalt(
+                        parseInt(process.env.SALT_VALUE)
+                    );
+                    const newHashedPasssword = await bcrypt.hash(
+                        password,
+                        salt
+                    );
+
+                    await UserModel.findByIdAndUpdate(user._id, {
+                        $set: { password: newHashedPasssword },
+                    });
+
+                    res.send({
+                        status: "success",
+                        message: "Password changed successfully",
+                    });
+                } else {
+                    res.send({
+                        status: "failed",
+                        message:
+                            "Password and Confirmation Password doesn't match",
+                    });
+                }
+            } else {
+                res.send({
+                    status: "failed",
+                    message: "All fields are required",
+                });
+            }
+        } catch {
+            res.send({
+                status: "failed",
+                message: "Invalid Token",
+            });
+        }
+    };
 }
 
 export default UserController;

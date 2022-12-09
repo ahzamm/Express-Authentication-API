@@ -16,7 +16,7 @@ content-type: application/json
 
 {  
   "email":"test4 @test.com",
-  "password":"12345"
+  "password":"ahzam123"
 }
 
 ### User Change Password
@@ -43,4 +43,14 @@ content-type: application/json
 
 {  
   "email": "test4 @test.com"
+}
+
+
+### Reset Password
+POST http://localhost:8000/api/user/reset-password/638b6f3a96e426d10b51c965/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MzhiNmYzYTk2ZTQyNmQxMGI1MWM5NjUiLCJpYXQiOjE2NzA1NjY1OTIsImV4cCI6MTY3MDU2NzQ5Mn0.brmpkC4VCAL4VDj7M6zEb-jRdGSsad_42jB5NPThvuA
+content-type: application/json
+
+{  
+  "password": "ahzam123",
+  "password_confirmation": "ahzam123"
 }
