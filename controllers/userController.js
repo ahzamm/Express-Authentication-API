@@ -45,6 +45,12 @@ class UserController {
                             { expiresIn: `${process.env.JWT_EXP_TIME}30d` }
                         );
 
+                        // store jwt token in cookie
+                        res.cookie("jwt", token, {
+                            expires: new Date(Date.now() + 30000),
+                            httpOnly: true,
+                        });
+
                         res.status(201).send({
                             status: "success",
                             message: "Registeration success",
@@ -88,6 +94,12 @@ class UserController {
                             process.env.JWT_SECRET_KEY,
                             { expiresIn: `${process.env.JWT_EXP_TIME}30d` }
                         );
+
+                        // store jwt token in cookie
+                        res.cookie("jwt", token, {
+                            expires: new Date(Date.now() + 30000),
+                            httpOnly: true,
+                        });
 
                         res.send({
                             status: "success",
@@ -191,16 +203,16 @@ class UserController {
                 const link = `http://127.0.0.1:3000/api/user/reset/${user._id}/${token}`;
 
                 // SEND EMAIL
-                let info = await transporter.sendMail.sendMail({
-                    from: process.env.EMAIL_FROM,
-                    to: user.email,
-                    subject: "Password Reset Link",
-                    body: `<a href=${link}>Click Here</a> to Reset your Passowrd`,
-                });
+                // let info = await transporter.sendMail.sendMail({
+                //     from: process.env.EMAIL_FROM,
+                //     to: user.email,
+                //     subject: "Password Reset Link",
+                //     body: `<a href=${link}>Click Here</a> to Reset your Passowrd`,
+                // });
                 res.send({
                     status: "success",
                     message: "Password reset email sent to your email",
-                    info: info,
+                    // info: info,
                 });
             } else {
                 res.send({
